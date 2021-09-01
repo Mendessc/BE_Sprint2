@@ -13,24 +13,66 @@ namespace senai_filmes_webAPI.Repositories
         private string stringConexao = "Data Source =DESKTOP-KINHA\\SQLEXPRESS; initial catalog =CATALOGO; user Id=sa; pwd=151917";
         public void AtualizarIdCorpo(GeneroDomain generoAtualizado)
         {
-            throw new NotImplementedException();
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryUpdateBody = "UPDATE GENERO SET nomeGenero = @nomeGenero WHERE idGenero = @idGenero";
+
+                using (SqlCommand cmd = new SqlCommand(queryUpdateBody, con))
+                {
+                    cmd.Parameters.AddWithValue("@nomeGenero", generoAtualizado.nomeGenero);
+                    cmd.Parameters.AddWithValue("@idGenero", generoAtualizado.idGenero);
+
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public GeneroDomain BuscarPorId(int idGenero)
         {
-            throw new NotImplementedException();
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string querySelectById = "SELECT nomeGenero, idGenero FROM GENERO WHERE idGenero = @idGenero";
+
+                con.Open();
+
+                SqlDataReader reader;
+
+                using (SqlCommand cmd = new SqlCommand(querySelectById, con))
+                {
+                    cmd.Parameters.AddWithValue("@idGenero", idGenero);
+
+                    reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        GeneroDomain generoBuscado = new GeneroDomain
+                        {
+                            idGenero = Convert.ToInt32(reader["idGenero"]),
+
+                            nomeGenero = reader["nomeGenero"].ToString()
+                        };
+                        return generoBuscado;
+                    }
+
+                    return null;
+                }
+            }
         }
 
         public void Cadastrar(GeneroDomain novoGenero)
         {
             using(SqlConnection con = new SqlConnection(stringConexao)) 
             {
-                string queryInsert = ($"INSERT INTO GENERO (nomeGenero) VALUES ('{novoGenero.nomeGenero}')");
+                string queryInsert = "INSERT INTO GENERO (nomeGenero) VALUES (@nomeGenero)";
 
                 con.Open();
 
                 using(SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+                    cmd.Parameters.AddWithValue("@nomeGenero", novoGenero.nomeGenero);
+
                     cmd.ExecuteNonQuery();
                 }
 
@@ -39,7 +81,19 @@ namespace senai_filmes_webAPI.Repositories
 
         public void Deletar(int idGenero)
         {
-            throw new NotImplementedException();
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryDelete = "DELETE FROM GENERO WHERE idGenero = @idGenero";
+
+               using (SqlCommand cmd = new SqlCommand(queryDelete, con))
+               {
+                cmd.Parameters.AddWithValue("@idGenero", idGenero);
+
+                con.Open();
+
+                cmd.ExecuteNonQuery();
+               }
+            }
         }
 
         public List<GeneroDomain> ListarTodos()
