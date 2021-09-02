@@ -42,3 +42,5 @@ SELECT idVeiculo, ISNULL(EMPRESA.idEmpresa,0)AS idEmpresa, nomeEmpresa AS EMPRES
 SELECT ISNULL (VEICULO.idVeiculo,0) AS idVeiculo, ISNULL(EMPRESA.idEmpresa,0)AS idEmpresa, nomeEmpresa AS EMPRESA, ISNULL(MODELO.idModelo,0)AS idModelo , ISNULL(MODELO.idMarca,0) AS idMarca, nomeModelo AS MODELO, ISNULL(VEICULO.placa,0) AS PLACA FROM VEICULO RIGHT JOIN EMPRESA ON EMPRESA.idEmpresa = VEICULO.idEmpresa RIGHT JOIN MODELO ON VEICULO.idModelo = MODELO.idModelo
 
 DELETE FROM VEICULO WHERE idVeiculo = 0
+
+SELECT ISNULL (ALUGUEL.idAluguel,0) AS idAluguel, ISNULL(CLIENTE.idCliente,0)AS idCliente, nomeCliente AS CLIENTE, ISNULL(VEICULO.idVeiculo,0)AS idVeiculo , ISNULL(ALUGUEL.dataAluguel,null) AS DataRetirada FROM ALUGUEL RIGHT JOIN CLIENTE ON CLIENTE.idCliente = ALUGUEL.idCliente RIGHT JOIN VEICULO ON ALUGUEL.idVeiculo = VEICULO.idVeiculo

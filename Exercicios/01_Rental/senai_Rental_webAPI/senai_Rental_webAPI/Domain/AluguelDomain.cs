@@ -11,5 +11,7 @@ namespace senai_Rental_webAPI.Domain
         public int idCliente { get; set; }
         public int idVeiculo { get; set; }
         public DateTime dataAluguel { get; set; }
+
+        public DateTime dataDevolucao { get; set; }
     }
 }

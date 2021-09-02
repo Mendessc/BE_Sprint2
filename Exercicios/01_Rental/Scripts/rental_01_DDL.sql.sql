@@ -52,5 +52,9 @@ ADD sobrenomeCliente VARCHAR(30) NOT NULL
 
 SELECT idVeiculo, idModelo, idEmpresa, placa FROM VEICULO
 
-DELETE FROM EMPRESA WHERE idEmpresa = 3
+DELETE FROM ALUGUEL WHERE idVeiculo = 1
+
+SELECT  idAluguel, ISNULL(CLIENTE.idCliente,0)AS idCliente, nomeCliente AS CLIENTE, ISNULL(VEICULO.idVeiculo,0)AS idVeiculo , ISNULL(ALUGUEL.dataAluguel, null) AS DataRetirada, ISNULL(ALUGUEL.dataDevolucao, null) AS DataDevolução FROM ALUGUEL RIGHT JOIN CLIENTE ON CLIENTE.idCliente = ALUGUEL.idCliente RIGHT JOIN VEICULO ON ALUGUEL.idVeiculo = VEICULO.idVeiculo
+
+SELECT ISNULL(ALUGUEL.idAluguel,0) AS idAluguel, ISNULL(CLIENTE.idCliente,0)AS idCliente, ISNULL(VEICULO.idVeiculo,0)AS idVeiculo , dataAluguel, dataDevolucao FROM ALUGUEL INNER JOIN CLIENTE ON CLIENTE.idCliente = ALUGUEL.idCliente INNER JOIN VEICULO ON ALUGUEL.idVeiculo = VEICULO.idVeiculo
 
